@@ -1,0 +1,10 @@
+﻿services:
+  code-review-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: code-review-agent:v1
+    container_name: code-review-agent-container
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
