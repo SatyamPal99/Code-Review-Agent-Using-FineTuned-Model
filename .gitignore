@@ -8,3 +8,5 @@ model_weights/
 *.gguf
 *.pt
 *.pth
+*.pptx
+generate_deck.py

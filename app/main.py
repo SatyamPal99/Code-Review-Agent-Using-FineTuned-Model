@@ -1,5 +1,7 @@
 import os
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from llama_cpp import Llama
 from app.ast_checker import validate_python_syntax
@@ -7,6 +9,13 @@ from app.ast_checker import validate_python_syntax
 app = FastAPI(
     title="Fine-Tuned Qwen 2.5 Code Review Agent API (GGUF)",
     version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 MODEL_PATH = "./model_weights/qwen2.5-coder-7b-q4_k_m.gguf"
@@ -17,7 +26,7 @@ def load_agent():
     global llm
     if not os.path.exists(MODEL_PATH):
         raise FileNotFoundError(f"GGUF model binary missing at {MODEL_PATH}")
-    
+
     print("🚀 Loading GGUF model into CPU RAM...")
     llm = Llama(
         model_path=MODEL_PATH,
@@ -56,7 +65,7 @@ def review_code(payload: CodeReviewRequest):
 
     # 2. Fast CPU Inference
     prompt = f"<|im_start|>user\nReview this Python code for bugs and optimization:\n{payload.code}<|im_end|>\n<|im_start|>assistant\n"
-    
+
     output = llm(
         prompt,
         max_tokens=256,
@@ -71,3 +80,7 @@ def review_code(payload: CodeReviewRequest):
         syntax_error=None,
         review=review_text
     )
+
+# Serves the frontend at http://localhost:8000/ — must stay LAST so it
+# doesn't shadow the routes defined above.
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
