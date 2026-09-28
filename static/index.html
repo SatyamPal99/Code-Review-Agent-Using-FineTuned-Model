@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Code Review </title>
+<title>Code Review Agent — Fine-Tuned Model with AST Guardrails</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23171a24'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%234fd1c5' text-anchor='middle'%3E%7B%7D%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -104,6 +104,33 @@
     padding:7px 12px; border-radius:var(--radius-sm); cursor:pointer;
   }
   .btn-ghost:hover{ color:var(--text); border-color:var(--text-faint); }
+
+  /* ---------- hero ---------- */
+  .hero{ text-align:center; padding:4px 0 40px; }
+  .hero-title{
+    margin:0 0 14px; font-family:var(--display); font-weight:700;
+    font-size:clamp(2.1rem, 4.6vw, 3.25rem); letter-spacing:-0.02em; line-height:1.1;
+    background:linear-gradient(100deg, var(--teal) 10%, var(--violet) 50%, var(--teal) 90%);
+    background-size:220% auto; background-position:0% center;
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:shine 7s ease-in-out infinite;
+  }
+  @keyframes shine{
+    0%{ background-position:0% center; }
+    50%{ background-position:100% center; }
+    100%{ background-position:0% center; }
+  }
+  .hero-tagline{
+    max-width:520px; margin:0 auto 20px; color:var(--text-dim);
+    font-size:1rem; line-height:1.65;
+  }
+  .hero-badges{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .hero-badge{
+    font-family:var(--mono); font-size:0.72rem; padding:5px 13px;
+    border-radius:20px; border:1px solid var(--border); color:var(--text-dim);
+  }
+  .hero-badge.teal{ color:var(--teal); border-color:rgba(79,209,197,0.35); background:var(--teal-soft); }
+  .hero-badge.violet{ color:var(--violet); border-color:rgba(185,166,255,0.35); background:var(--violet-soft); }
 
   /* ---------- section heads ---------- */
   .section-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:12px; }
@@ -223,8 +250,8 @@
     <div class="brand">
       <span class="brand-mark">{}</span>
       <div class="brand-text">
-        <span class="brand-name">Code Buddy</span>
-        <span class="brand-sub">Guardrailed AI code review</span>
+        <span class="brand-name">Code Review Agent</span>
+        <span class="brand-sub">AST-guarded LLM reviews</span>
       </div>
     </div>
     <div class="topbar-right">
@@ -242,6 +269,16 @@
       </div>
     </div>
   </header>
+
+  <section class="hero">
+    <h1 class="hero-title">Code Review Agent</h1>
+    <p class="hero-tagline">A fine-tuned code LLM, guarded by a deterministic AST syntax check — every review runs locally, nothing leaves your machine.</p>
+    <div class="hero-badges">
+      <span class="hero-badge teal">AST guardrails</span>
+      <span class="hero-badge violet">Fine-tuned Qwen 2.5 Coder</span>
+      <span class="hero-badge">code-review-agent-using-finetuned-model</span>
+    </div>
+  </section>
 
   <section class="editor-section">
     <div class="section-head">
